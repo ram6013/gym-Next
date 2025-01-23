@@ -11,6 +11,9 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        orange: "#F47F47",
+        negro: "#28282A",
+        fondo: "#1F2121"
       },
     },
   },
