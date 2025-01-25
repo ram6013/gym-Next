@@ -1,11 +1,22 @@
+
 import { Suspense } from "react";
 import { getRutinas } from "./actions";
-
+import Ejercicios from "./Componentes/Ejercicios";
+import BotonCreate from "./Componentes/BotonMasCrear";
 export default function Page() {
   return (
     <div>
-      <Suspense fallback={<h1>Loading...</h1>}>
+      <BotonCreate />
+      <Suspense
+        fallback={
+          <div className="flex justify-center w-full items-center">
+            <h1 className="text-white font-bold text-4xl">Loading...</h1>{" "}
+          </div>
+        }
+      >
+        <div >
         <Rutinas />
+        </div>
       </Suspense>
     </div>
   );
@@ -13,27 +24,17 @@ export default function Page() {
 
 const Rutinas = async () => {
   const response = await getRutinas();
-
   if (response.error || !response.data) {
     return <></>;
   }
   return (
-    <div className="flex justify-around mt-8 h-screen max-h-screen">
+    <div className="grid grid-cols-1 lg:grid-cols-2 justify-items-center mt-8 ">
       {response.data.map((rutina) => (
         <div
-          className=" relative w-1/4 h-1/4  bg-negro border border-gray-900 rounded-xl"
+          className="lg:3/4 h-64 mb-16  w-3/4 relative bg-negro border border-gray-900 rounded-xl "
           key={rutina.id}
         >
-          <div className="absolute top-2 w-full ">
-            <h1 className="text-center text-orange font-bold text-4xl">{rutina.nombre}</h1>
-          </div>
-          <div className="absolute top-2 flex justify-end w-full">
-            <input type="number" placeholder="Nº Ex" className="w-[10%]  border border-gray-500 mr-5" max={20} min={1}/>
-          </div>
-          <div className="absolute bottom-2 flex w-full justify-around">
-            <button className="text-orange font-bold">Delete</button>
-            <button className="text-orange font-bold">Save</button>
-          </div>
+          <Ejercicios name={rutina.nombre} />
         </div>
       ))}
     </div>

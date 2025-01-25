@@ -14,7 +14,6 @@ export async function createRutina(rutina: Partial<Rutina>) {
   if (error) {
     return { error: error.message };
   }
-
   return { data: data };
 }
 
