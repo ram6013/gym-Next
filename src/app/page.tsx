@@ -5,7 +5,7 @@ import Ejercicios from "./Componentes/Ejercicios";
 import BotonCreate from "./Componentes/BotonMasCrear";
 export default function Page() {
   return (
-    <div>
+    <div >
       <BotonCreate />
       <Suspense
         fallback={
@@ -28,10 +28,10 @@ const Rutinas = async () => {
     return <></>;
   }
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 justify-items-center mt-8 ">
+    <div className="grid grid-cols-1 h-auto justify-items-center mt-3 lg:mt-8 lg:block">
       {response.data.map((rutina) => (
         <div
-          className="lg:3/4 h-64 mb-16  w-3/4 relative bg-negro border border-gray-900 rounded-xl "
+          className="h-auto min-h-96 mb-16 w-[95%] lg:w-3/4 relative bg-negro border border-gray-900 rounded-xl "
           key={rutina.id}
         >
           <Ejercicios name={rutina.nombre} />

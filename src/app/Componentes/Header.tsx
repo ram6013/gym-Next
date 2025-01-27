@@ -11,9 +11,9 @@ import { IoMdClose } from "react-icons/io";
 export default function Header() {
   const [showModal, setShowModal] = useState(false);
   const iconClass =
-    "text-orange transform transition-transform hover:scale-110 m-3 text-xl  lg:text-4xl ";
+    "text-orange transform transition-transform hover:scale-110 m-3 text-3xl  lg:text-4xl ";
   return (
-    <div className="flex w-auto h-auto bg-negro items-center justify-between ">
+    <div className="flex w-auto lg:h-auto min-h-20 bg-negro items-center justify-between ">
       <button
         className="lg:ml-10 z-30"
       >
