@@ -1,32 +1,35 @@
 import React from "react";
 import { MdExpandLess, MdExpandMore } from "react-icons/md";
 import { useState } from "react";
+import toast from "react-hot-toast";
+
 
 interface SeriesProps {
   index: number;
-  handleOnChangeSeries: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => void;
-  handleOpenSeries: () => void;
-  openSeries: boolean;
   NoInputBar: string;
   setText: React.Dispatch<React.SetStateAction<string[]>>;
   text: string[];
-  reps: number;
 }
 
 const Series: React.FC<SeriesProps> = ({
   index,
-  handleOnChangeSeries,
-  handleOpenSeries,
-  openSeries,
   NoInputBar,
   setText,
   text,
-  reps,
 }) => {
   const [isEditing, setIsEditing] = useState<number | null>(null);
+  const [openSeries, setOpenSeries] = useState(false); 
+  const [reps, setReps] = useState(0);
+
+
+
+  const handleOpenSeries = () => {
+    if (reps === 0) {
+      toast.error("No hay series que mostrar");
+      return;
+    }
+    setOpenSeries(!openSeries);
+  };
 
   const handleDoubleClick = (index: number) => {
     setIsEditing(index);
@@ -50,6 +53,15 @@ const Series: React.FC<SeriesProps> = ({
       setIsEditing(null);
     }
   };
+
+
+  const handleOnChangeSeries = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = parseInt(e.target.value);
+    if (isNaN(value) || value < 0) value = 0;
+    if (value > 6) value = 6;
+    setOpenSeries(true);
+    setReps(value);
+  };
   return (
     <div key={index} className="flex flex-col ">
       {isEditing === index ? (
@@ -69,7 +81,7 @@ const Series: React.FC<SeriesProps> = ({
               <input
                 max={6}
                 min={0}
-                onChange={(e) => handleOnChangeSeries(e, index)}
+                onChange={(e) => handleOnChangeSeries(e)}
                 id={`Series-${index}`}
                 type="number"
                 className={`text-black text-center w-[10%] ${NoInputBar}`}
@@ -86,13 +98,13 @@ const Series: React.FC<SeriesProps> = ({
           onDoubleClick={() => handleDoubleClick(index)}
         >
           <div className="flex justify-between w-full mt-5">
-            <h1>{text[index]}</h1>
+            <h1 className="truncate text-[clamp(1rem,5vw,2rem)]  max-w-[50%] lg:max-w-[90%] ">{text[index]}</h1>
             <div className="flex justify-center items-center gap-5">
               <label htmlFor={`Series-${index}`}>Series:</label>
               <input
                 max={6}
                 min={0}
-                onChange={(e) => handleOnChangeSeries(e, index)}
+                onChange={(e) => handleOnChangeSeries(e)}
                 id={`Series-${index}`}
                 type="number"
                 className={`text-black text-center w-[10%] ${NoInputBar}`}

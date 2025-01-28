@@ -26,3 +26,12 @@ export async function getRutinas() {
 
   return { data: data };
 }
+
+
+export async function deleteRutina(id: number) {
+  const { data, error } = await supabase.from("rutinas").delete().eq("id", id);
+  if (error) {
+    return { error: error.message };
+  }
+  return { data: data };
+}

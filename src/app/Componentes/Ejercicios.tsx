@@ -1,24 +1,19 @@
 "use client";
 import { useState } from "react";
 import Series from "./Series";
+import { deleteRutina } from "../actions";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-export default function Ejercicios({ name }: { name: string }) {
+export default function Ejercicios({ name, id }: { name: string, id: number }) {
   const [numEx, setNumEx] = useState(0);
-  const [openSeries, setOpenSeries] = useState(false);
-  const [reps, setReps] = useState(0);
   const [text, setText] = useState<string[]>([]);
+  const router = useRouter();
 
-  const handleOpenSeries = () => {
-    if (reps === 0) {
-      toast.error("No hay series que mostrar");
-      return;
-    }
-    setOpenSeries(!openSeries);
-  };
 
   const handleOnChangeReps = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = parseInt(e.target.value);
+  
     if (isNaN(value) || value < 1) value = 0;
     if (value > 10) value = 10;
     setNumEx(value);
@@ -40,15 +35,21 @@ export default function Ejercicios({ name }: { name: string }) {
     }
   };
 
-  const handleOnChangeSeries = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = parseInt(e.target.value);
-    if (isNaN(value) || value < 0) value = 0;
-    if (value > 6) value = 6;
-
-    setReps(value);
-    setOpenSeries(true);
-  };
-
+  const handleDelete = async () => {
+    try {
+      const response = await deleteRutina(id);
+      if (response.error) {
+        toast.error("No se pudo eliminar la rutina");
+        console.log(response.error);
+      } else {
+        toast.success("Rutina eliminada");
+        router.refresh();
+      }
+    } catch (error) {
+      toast.error("No se pudo eliminar la rutina");
+      console.log(error);
+    }
+  }
   const Botones =
     "text-orange font-bold border-orange lg:text-2xl border-4 p-3 rounded-lg hover:text-white hover:border-white";
   const NoInputBar =
@@ -81,17 +82,13 @@ export default function Ejercicios({ name }: { name: string }) {
             key={i}
             index={i}
             text={text}
-            handleOnChangeSeries={(e) => handleOnChangeSeries(e)}
-            handleOpenSeries={handleOpenSeries}
-            openSeries={openSeries}
             NoInputBar={NoInputBar}
             setText={setText}
-            reps={reps}
           />
         ))}
       </div>
       <div className="flex mt-5 w-full justify-around">
-        <button className={Botones}>Delete</button>
+        <button className={Botones} onClick={handleDelete}>Delete</button>
         <button className={Botones}>Save</button>
       </div>
     </div>

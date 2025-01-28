@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import { createRutina } from "../actions";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import { useOutsideClick } from "../Hooks/useOutsideClick";
+import { useRouter } from "next/navigation";
 export default function BotonCreate() {
   const [showModal, setShowModal] = useState(false);
   return (
@@ -33,12 +34,14 @@ function Create({
   const containerRef = useRef(null);
   useOutsideClick(containerRef, () => setShowModal(false));
 
+  const router = useRouter()
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const Rutina = { nombre: rutina };
     createRutina(Rutina);
-    event.preventDefault();
     setShowModal(false);
-    window.location.reload();
+    router.refresh();
   };
 
   return (
