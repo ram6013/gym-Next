@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createRutina } from "@/app/actions";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import { useOutsideClick } from "@/app/Hooks/useOutsideClick";
@@ -9,6 +9,15 @@ import { useUserId } from "@/app/Context/UserContext";
 
 export default function BotonCreate() {
   const [showModal, setShowModal] = useState(false);
+  const [hasIdCookie, setHasIdCookie] = useState(false);
+  useEffect(() => {
+    const cookies = document.cookie;
+    const hasId = cookies.includes("id=");
+    setHasIdCookie(hasId);
+  }, []);
+  if (!hasIdCookie) {
+    return <></>;
+  }
   return (
     <div>
       <button

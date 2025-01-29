@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { getRutinas } from "../actions";
 import Ejercicios from "@/Componentes/Ejercicios";
 import BotonCreate from "@/Componentes/BotonMasCrear";
-import { headers, cookies } from "next/headers";
+import { cookies } from "next/headers";
 export default function Page() {
   return (
     <div>
