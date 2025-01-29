@@ -5,10 +5,14 @@ import { deleteRutina } from "@/app/actions";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-export default function Ejercicios({ name, id }: { name: string, id: number }) {
+
+export default function Ejercicios({ name, id , userId}: { name: string, id: number, userId: number }) {
   const [numEx, setNumEx] = useState(0);
   const [text, setText] = useState<string[]>([]);
   const router = useRouter();
+
+  const id_pass = {user_id: userId, id: id}
+ 
 
 
   const handleOnChangeReps = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,12 +40,14 @@ export default function Ejercicios({ name, id }: { name: string, id: number }) {
   };
 
   const handleDelete = async () => {
+ 
     try {
-      const response = await deleteRutina(id);
+      const response = await deleteRutina(id_pass);
       if (response.error) {
         toast.error("No se pudo eliminar la rutina");
-        console.log(response.error);
+        console.log("esto es el error",response.error);
       } else {
+        console.log("esto es el data",response.data);
         toast.success("Rutina eliminada");
         router.refresh();
       }

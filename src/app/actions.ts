@@ -29,10 +29,15 @@ export async function getRutinas({ userId }: { userId: number | null }) {
 }
 
 
-export async function deleteRutina(id: number) {
-  const { data, error } = await supabase.from("rutinas").delete().eq("id", id);
+export async function deleteRutina({user_id, id}: {user_id: number, id: number}) {
+  const { data, error } = await supabase.from("rutinas").delete().eq("id" , id ).eq("user_id", user_id);
   if (error) {
     return { error: error.message };
   }
   return { data: data };
+}
+
+
+export async function updateRutina() {
+  
 }

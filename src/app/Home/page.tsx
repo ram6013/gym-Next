@@ -37,7 +37,7 @@ const Rutinas = async () => {
           className="h-auto min-h-96 mb-16 w-[95%] lg:w-3/4 relative bg-negro border border-gray-900 rounded-xl "
           key={rutina.id}
         >
-          <Ejercicios name={rutina.nombre} id={rutina.id} />
+          <Ejercicios name={rutina.nombre} id={rutina.id} userId={userId} />
         </div>
       ))}
     </div>

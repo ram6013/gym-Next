@@ -13,7 +13,7 @@ export default function LogOut({setShowLogOut}: {setShowLogOut: React.Dispatch<R
     }
 
     return (
-        <div className="absolute  left-12 lg:left-24 lg:top-0 top-14 justify-center gap-7">
+        <div className="absolute  left-12 lg:left-24 lg:top-5 top-14 justify-center gap-7">
             <button onClick={clearCoockies} className="text-orange font-extrabold border-2 bg-negro border-orange p-1 lg:p-2 transition-transform hover:scale-110">LogOut</button>
         </div>
     );
