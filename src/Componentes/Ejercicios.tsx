@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Series from "./Series";
-import { deleteRutina } from "../actions";
+import { deleteRutina } from "@/app/actions";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 

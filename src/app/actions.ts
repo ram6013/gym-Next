@@ -9,6 +9,7 @@ export async function createRutina(rutina: Partial<Rutina>) {
 
   const { data, error } = await supabase.from("rutinas").insert({
     nombre: rutina.nombre,
+    user_id: rutina.id_user,
   }).select("id");
 
   if (error) {

@@ -7,16 +7,13 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { IoMdClose } from "react-icons/io";
 
-  
 export default function Header() {
   const [showModal, setShowModal] = useState(false);
   const iconClass =
     "text-orange transform transition-transform hover:scale-110 m-3 text-3xl  lg:text-4xl ";
   return (
     <div className="flex w-auto lg:h-auto min-h-20 bg-negro items-center justify-between ">
-      <button
-        className="lg:ml-10 z-30"
-      >
+      <button className="lg:ml-10 z-30">
         <FaUser className={iconClass} />
       </button>
       <div className="flex absolute w-full justify-center">
@@ -28,10 +25,8 @@ export default function Header() {
         <Botons classNameDiv="hidden  w-full lg:flex justify-end lg:justify-around gap-10 mr-10 " />
       </div>
       <div className="lg:hidden w-full flex justify-end ">
-        <button  onClick={() => setShowModal(!showModal)}>
-          <CiMenuBurger
-            className={iconClass}
-          />
+        <button onClick={() => setShowModal(!showModal)}>
+          <CiMenuBurger className={iconClass} />
         </button>
       </div>
       {showModal && (
@@ -40,7 +35,7 @@ export default function Header() {
             className="absolute top-4 right-4 text-white"
             onClick={() => setShowModal(!showModal)}
           >
-            <IoMdClose className={iconClass} size={50}/>
+            <IoMdClose className={iconClass} size={50} />
           </button>
 
           <div className="flex flex-col items-center justify-around space-y-6 z-40"></div>
@@ -67,27 +62,28 @@ function Botons({
   return (
     <div className={classNameDiv}>
       <button className={classNameBoton} onClick={() => navigate.push("/run")}>
-        <FaPersonRunning className={iconClass} /><H1 text="Running"/>
+        <FaPersonRunning className={iconClass} />
+        <H1 text="Running" />
       </button>
       <button
         className={classNameBoton}
         onClick={() => navigate.push("/calendar")}
       >
-        <FaCalendar className={iconClass} /> <H1 text="Calendar"/>
+        <FaCalendar className={iconClass} /> <H1 text="Calendar" />
       </button>
-      <button className={classNameBoton} onClick={() => navigate.push("/stats")}>
-        <VscGraph className={iconClass} /> <H1 text="Stats"/>
+      <button
+        className={classNameBoton}
+        onClick={() => navigate.push("/stats")}
+      >
+        <VscGraph className={iconClass} /> <H1 text="Stats" />
       </button>
       <button className={classNameBoton} onClick={() => navigate.push("/")}>
-        <FaHome className={iconClass} /> <H1 text="Home"/>
+        <FaHome className={iconClass} /> <H1 text="Home" />
       </button>
     </div>
   );
 }
 
-
-function H1 ({text}: {text: string}){
-  return(
-    <h1 className="lg:hidden text-2xl font-bold">{text}</h1>
-  )
+function H1({ text }: { text: string }) {
+  return <h1 className="lg:hidden text-2xl font-bold">{text}</h1>;
 }

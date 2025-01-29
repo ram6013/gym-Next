@@ -1,9 +1,10 @@
 "use client";
 import React, { useRef, useState } from "react";
-import { createRutina } from "../actions";
+import { createRutina } from "@/app/actions";
 import { FaRegSquarePlus } from "react-icons/fa6";
-import { useOutsideClick } from "../Hooks/useOutsideClick";
+import { useOutsideClick } from "@/app/Hooks/useOutsideClick";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 export default function BotonCreate() {
   const [showModal, setShowModal] = useState(false);
   return (
@@ -38,8 +39,16 @@ function Create({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const Rutina = { nombre: rutina };
-    createRutina(Rutina);
+    const Rutina = { nombre: rutina , id_user: 2 };
+    const response = await createRutina(Rutina);
+    if (response.error) {
+      toast.error("Error al crear rutina");
+      console.log(response.error);
+    }
+    else{
+      toast.success("Rutina creada");
+    }
+    
     setShowModal(false);
     router.refresh();
   };
