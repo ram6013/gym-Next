@@ -4,11 +4,12 @@ import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/SupebaseClient";
 import toast from "react-hot-toast";
 import bcrypt from "bcryptjs";
+import { useUserId } from "@/app/Context/UserContext";
 
 export default function Login() {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
-
+  const { setUserId } = useUserId();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -28,11 +29,10 @@ export default function Login() {
 
         if (isMatch) {
           toast.success("Inicio de sesión exitoso");
+          setUserId(data.id);
 
-          const queryParams = new URLSearchParams({ id: data.id }).toString();
-          const path = `/Home?${queryParams}`;
-
-          router.push(path);
+          document.cookie = `id=${data.id}`;
+          router.push("Home");
         } else {
           toast.error("Credenciales incorrectas");
         }

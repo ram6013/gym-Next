@@ -5,6 +5,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Header from "@/Componentes/Header";
 import { Toaster } from "react-hot-toast";
 import { headers } from "next/headers";
+import { UserProvider } from "./Context/UserContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,14 +28,16 @@ export default async function RootLayout({
 }>) {
   const currentPath = (await headers()).get("next-url") || "/";
   return (
-    <html lang="en" className="no-scrollbar">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-fondo `}
-      >
-        {currentPath !== "/" && <Header />}
-        {children}
-        <Toaster />
-      </body>
-    </html>
+    <UserProvider>
+      <html lang="en" className="no-scrollbar">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-fondo `}
+        >
+          {currentPath !== "/" && <Header />}
+          {children}
+          <Toaster />
+        </body>
+      </html>
+    </UserProvider>
   );
 }

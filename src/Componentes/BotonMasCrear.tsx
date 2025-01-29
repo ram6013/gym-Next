@@ -5,6 +5,8 @@ import { FaRegSquarePlus } from "react-icons/fa6";
 import { useOutsideClick } from "@/app/Hooks/useOutsideClick";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { useUserId } from "@/app/Context/UserContext";
+
 export default function BotonCreate() {
   const [showModal, setShowModal] = useState(false);
   return (
@@ -26,7 +28,7 @@ function Create({
   setShowModal: (show: React.SetStateAction<boolean>) => void;
 }) {
   const [rutina, setRutina] = useState("");
-
+  const userId = useUserId();
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRutina(event.target.value);
   };
@@ -39,7 +41,7 @@ function Create({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const Rutina = { nombre: rutina , id_user: 2 };
+    const Rutina = { nombre: rutina, id_user: userId.userId ?? undefined };
     const response = await createRutina(Rutina);
     if (response.error) {
       toast.error("Error al crear rutina");

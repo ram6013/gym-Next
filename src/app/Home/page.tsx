@@ -2,9 +2,10 @@ import { Suspense } from "react";
 import { getRutinas } from "../actions";
 import Ejercicios from "@/Componentes/Ejercicios";
 import BotonCreate from "@/Componentes/BotonMasCrear";
+import { headers, cookies } from "next/headers";
 export default function Page() {
   return (
-    <div >
+    <div>
       <BotonCreate />
       <Suspense
         fallback={
@@ -13,8 +14,8 @@ export default function Page() {
           </div>
         }
       >
-        <div >
-        <Rutinas />
+        <div>
+          <Rutinas />
         </div>
       </Suspense>
     </div>
@@ -22,7 +23,10 @@ export default function Page() {
 }
 
 const Rutinas = async () => {
-  const response = await getRutinas();
+  const id = (await cookies()).get("id")?.value;
+  const userId = parseInt(id || "0");
+  console.log("esto es : ", userId, id);
+  const response = await getRutinas({ userId });
   if (response.error || !response.data) {
     return <></>;
   }
