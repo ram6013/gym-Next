@@ -62,7 +62,7 @@ export default function Ejercicios({ name, id , userId}: { name: string, id: num
     "resize-none scrollbar-hide [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none";
 
   return (
-    <div className="flex flex-col h-auto min-h-96 m-5  :w-auto" >
+    <div className="flex flex-col h-auto min-h-96 m-5  :w-auto">
       <h1 className="text-center text-orange font-bold text-4xl">{name}</h1>
       <div className="flex">
         <label className="text-orange font-bold mr-5" htmlFor="NumbEx">
@@ -94,7 +94,9 @@ export default function Ejercicios({ name, id , userId}: { name: string, id: num
         ))}
       </div>
       <div className="flex mt-5 w-full justify-around">
-        <button className={Botones} onClick={handleDelete}>Delete</button>
+        <button className={Botones} onClick={handleDelete}>
+          Delete
+        </button>
         <button className={Botones}>Save</button>
       </div>
     </div>

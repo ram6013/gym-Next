@@ -1,7 +1,7 @@
 "use server";
 
 import { supabase } from "../../lib/SupebaseClient";
-import { Rutina } from "../../lib/types";
+import { Info, Rutina, ejercicio } from "../../lib/types";
 
 
 export async function createRutina(rutina: Partial<Rutina>) {
@@ -38,6 +38,31 @@ export async function deleteRutina({user_id, id}: {user_id: number, id: number})
 }
 
 
-export async function updateRutina() {
-  
+export async function updateEjercicio(ejercicio: Partial<ejercicio>) {
+  const { data, error } = await supabase
+    .from("ejercicios")
+    .insert({
+      name: ejercicio.name,
+      rutina_id: ejercicio.rutina_id,
+      num_ex: ejercicio.num_ex,
+    });
+  if (error) {
+    return { error: error.message };
+  }
+  return { data: data };
 }
+
+export async function updateInfo(info: Partial<Info>) {
+  const { data, error } = await supabase.from("info").insert({
+    ejercicio_id: info.ejercicio_id,
+    kg: info.kg,
+    rpe: info.rpe,
+    reps: info.reps,
+    num_sets: info.num_sets,
+  });
+  if (error) {
+    return { error: error.message };
+  }
+  return { data: data };
+}
+ 

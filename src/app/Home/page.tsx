@@ -25,7 +25,6 @@ export default function Page() {
 const Rutinas = async () => {
   const id = (await cookies()).get("id")?.value;
   const userId = parseInt(id || "0");
-  console.log("esto es : ", userId, id);
   const response = await getRutinas({ userId });
   if (response.error || !response.data) {
     return <></>;

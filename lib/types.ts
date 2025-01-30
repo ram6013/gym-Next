@@ -3,3 +3,17 @@ export type Rutina = {
     nombre : string;
     id_user : number;
 }
+
+export type ejercicio = {
+    name: string;
+    rutina_id: number;
+    num_ex: number;
+}
+
+export type Info = {
+    ejercicio_id: number;
+    kg: number;
+    rpe: number;
+    reps: number;
+    num_sets: number;
+}

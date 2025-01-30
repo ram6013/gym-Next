@@ -35,6 +35,7 @@ export default function Login() {
           router.push("Home");
         } else {
           toast.error("Credenciales incorrectas");
+          setPassword("");
         }
       }
     }
