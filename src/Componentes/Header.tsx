@@ -3,7 +3,7 @@ import { FaUser, FaCalendar, FaHome } from "react-icons/fa";
 import { CiMenuBurger } from "react-icons/ci";
 import { FaPersonRunning } from "react-icons/fa6";
 import { VscGraph } from "react-icons/vsc";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IoMdClose } from "react-icons/io";
 import { usePathname } from "next/navigation";
@@ -12,9 +12,7 @@ import { useOutsideClick } from "@/app/Hooks/useOutsideClick";
 import { useUserId } from "@/app/Context/UserContext";
 export default function Header() {
   const [showModal, setShowModal] = useState(false);
-  const [hasIdCookie, setHasIdCookie] = useState<boolean | null>(null);;
   const [showLogaut, setShowLogout] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const iconClass =
     "text-orange transform transition-transform hover:scale-110 m-3 text-3xl  lg:text-4xl ";
   const path = usePathname();
@@ -22,7 +20,6 @@ export default function Header() {
   useOutsideClick(containerRef, () => setShowLogout(false));
   const id = useUserId();
   console.log(id.userId);
-
 
   if (path !== "/" && id.userId == null) {
     return (
