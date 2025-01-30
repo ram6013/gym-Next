@@ -9,9 +9,10 @@ import { IoMdClose } from "react-icons/io";
 import { usePathname } from "next/navigation";
 import LogOut from "./LogOut";
 import { useOutsideClick } from "@/app/Hooks/useOutsideClick";
+import { useUserId } from "@/app/Context/UserContext";
 export default function Header() {
   const [showModal, setShowModal] = useState(false);
-  const [hasIdCookie, setHasIdCookie] = useState(false);
+  const [hasIdCookie, setHasIdCookie] = useState<boolean | null>(null);;
   const [showLogaut, setShowLogout] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const iconClass =
@@ -19,18 +20,11 @@ export default function Header() {
   const path = usePathname();
   const containerRef = useRef(null);
   useOutsideClick(containerRef, () => setShowLogout(false));
-  useEffect(() => {
-    const cookies = document.cookie;
-    const hasId = cookies.includes("id=");
-    setHasIdCookie(hasId);
-    setIsLoading(false); 
-  }, []);
+  const id = useUserId();
+  console.log(id.userId);
 
-  if (isLoading) {
-    return <div>Loading...</div>; 
-  }
 
-  if (path !== "/" && !hasIdCookie) {
+  if (path !== "/" && id.userId == null) {
     return (
       <div className="absolute w-full z-50 bg-fondo h-screen flex items-center justify-center">
         <h1 className="text-3xl lg:text-5xl text-center font-bold text-orange">
