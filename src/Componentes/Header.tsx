@@ -19,8 +19,6 @@ export default function Header() {
   const containerRef = useRef(null);
   useOutsideClick(containerRef, () => setShowLogout(false));
   const id = useUserId();
-  console.log(id.userId);
-
   if (path !== "/" && id.userId == null) {
     return (
       <div className="absolute w-full z-50 bg-fondo h-screen flex items-center justify-center">

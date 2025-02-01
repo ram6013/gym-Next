@@ -2,12 +2,13 @@ export type Rutina = {
     id : number;
     nombre : string;
     id_user : number;
+    num_ex : number;
 }
 
 export type ejercicio = {
     name: string;
-    rutina_id: number;
-    num_ex: number;
+    rutinas_id: number;
+    num_series: number;
 }
 
 export type Info = {

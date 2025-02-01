@@ -10,7 +10,7 @@ export default function Page() {
       <Suspense
         fallback={
           <div className="flex justify-center w-full items-center">
-            <h1 className="text-white font-bold text-4xl">Loading...</h1>{" "}
+            <h1 className="text-white font-bold text-4xl">Loading...</h1>{" "}  
           </div>
         }
       >
@@ -36,7 +36,7 @@ const Rutinas = async () => {
           className="h-auto min-h-96 mb-16 w-[95%] lg:w-3/4 relative bg-negro border border-gray-900 rounded-xl "
           key={rutina.id}
         >
-          <Ejercicios name={rutina.nombre} id={rutina.id} userId={userId} />
+          <Ejercicios name={rutina.nombre} rutina_id={rutina.id} userId={userId} num_ex={rutina.num_ex} />
         </div>
       ))}
     </div>

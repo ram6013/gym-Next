@@ -24,7 +24,6 @@ export async function getRutinas({ userId }: { userId: number | null }) {
   if (error) {
     return { error: error.message };
   }
-
   return { data: data };
 }
 
@@ -36,16 +35,27 @@ export async function deleteRutina({user_id, id}: {user_id: number, id: number})
   }
   return { data: data };
 }
-
+export async function updateRutina(rutina: Partial<Rutina>) {
+  console.log("esto es el rutina",rutina.num_ex);
+  console.log("esto es el id", rutina.id);
+  const { data, error } = await supabase
+    .from("rutinas")
+    .update({
+      num_ex: rutina.num_ex,
+    })
+    .eq("id", rutina.id);
+  if (error) {
+    return { error: error.message };
+  }
+  return { data: data };
+}
 
 export async function updateEjercicio(ejercicio: Partial<ejercicio>) {
-  const { data, error } = await supabase
-    .from("ejercicios")
-    .insert({
-      name: ejercicio.name,
-      rutina_id: ejercicio.rutina_id,
-      num_ex: ejercicio.num_ex,
-    });
+  const { data, error } = await supabase.from("ejercicios").insert({
+    name: ejercicio.name,
+    rutinas_id: ejercicio.rutinas_id, 
+    num_series: ejercicio.num_series,
+  }).eq("id", ejercicio.rutinas_id);
   if (error) {
     return { error: error.message };
   }

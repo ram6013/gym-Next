@@ -68,6 +68,7 @@ const Series: React.FC<SeriesProps> = ({
         <div className=" h-auto flex flex- items-center text-white font-extrabold lg:text-2xl text-center cursor-pointer">
           <div className="flex justify-between w-full mt-5">
             <input
+              name="nombre_serie"
               type="text"
               className={`w-[40%] text-center border rounded bg-negro text-white font-extrabold `}
               value={text[index]}
@@ -98,10 +99,13 @@ const Series: React.FC<SeriesProps> = ({
           onDoubleClick={() => handleDoubleClick(index)}
         >
           <div className="flex justify-between w-full mt-5">
-            <h1 className="truncate text-[clamp(1rem,5vw,2rem)]  max-w-[50%] lg:max-w-[90%] ">{text[index]}</h1>
+            <h1 className="truncate text-[clamp(1rem,5vw,2rem)]  max-w-[50%] lg:max-w-[90%] ">
+              {text[index]}
+            </h1>
             <div className="flex justify-center items-center gap-5">
               <label htmlFor={`Series-${index}`}>Series:</label>
               <input
+                name="series"
                 max={6}
                 min={0}
                 onChange={(e) => handleOnChangeSeries(e)}
@@ -152,19 +156,24 @@ const RepsKgRpe = () => {
         <label className={classLabel} htmlFor="Reps">
           Reps:
         </label>
-        <input id="Reps" type="number" className={classInput}></input>
+        <input
+          name="reps"
+          id="Reps"
+          type="number"
+          className={classInput}
+        ></input>
       </div>
       <div className={classDiv}>
         <label className={classLabel} htmlFor="Kg">
           Kg:
         </label>
-        <input id="Kg" type="number" className={classInput}></input>
+        <input name="kg" id="Kg" type="number" className={classInput}></input>
       </div>
       <div className={classDiv}>
         <label className={classLabel} htmlFor="Rpe">
           Rpe:
         </label>
-        <input id="Rpe" type="number" className={classInput}></input>
+        <input name="rpe" id="Rpe" type="number" className={classInput}></input>
       </div>
     </div>
   );

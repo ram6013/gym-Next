@@ -1,23 +1,31 @@
 "use client";
 import { useState } from "react";
 import Series from "./Series";
-import { deleteRutina } from "@/app/actions";
+import { deleteRutina, updateRutina } from "@/app/actions";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { updateEjercicio } from "@/app/actions";
 
-
-export default function Ejercicios({ name, id , userId}: { name: string, id: number, userId: number }) {
-  const [numEx, setNumEx] = useState(0);
-  const [text, setText] = useState<string[]>([]);
+export default function Ejercicios({
+  name,
+  rutina_id,
+  userId,
+  num_ex,
+}: {
+  name: string;
+  rutina_id: number;
+  userId: number;
+  num_ex: number;
+}) {
+  const [numEx, setNumEx] = useState(num_ex);
+  const [text, setText] = useState<string[]>(["Ejercicios"]);
   const router = useRouter();
 
-  const id_pass = {user_id: userId, id: id}
- 
-
+  const id_pass = { user_id: userId, id: rutina_id };
 
   const handleOnChangeReps = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = parseInt(e.target.value);
-  
+
     if (isNaN(value) || value < 1) value = 0;
     if (value > 10) value = 10;
     setNumEx(value);
@@ -40,14 +48,13 @@ export default function Ejercicios({ name, id , userId}: { name: string, id: num
   };
 
   const handleDelete = async () => {
- 
     try {
       const response = await deleteRutina(id_pass);
       if (response.error) {
         toast.error("No se pudo eliminar la rutina");
-        console.log("esto es el error",response.error);
+        console.log("esto es el error", response.error);
       } else {
-        console.log("esto es el data",response.data);
+        console.log("esto es el data", response.data);
         toast.success("Rutina eliminada");
         router.refresh();
       }
@@ -55,20 +62,55 @@ export default function Ejercicios({ name, id , userId}: { name: string, id: num
       toast.error("No se pudo eliminar la rutina");
       console.log(error);
     }
-  }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = document.forms.namedItem("form") as HTMLFormElement;
+    const rutina = {
+      num_ex: parseInt(form.ejercicios.value, 10),
+      id: rutina_id,
+    };
+    const ejercicio = {
+      num_series: form.series.value,
+      rutinas_id: rutina_id,
+      name: form.nombre_serie.value,
+    };
+
+    const response = await updateRutina(rutina);
+    if (response.error) {
+      toast.error("No se pudo actualizar la rutina");
+      console.log("esto es lo que esta fallando: ", response.error);
+    } else {
+      const response2 = await updateEjercicio(ejercicio);
+      if (response2.error) {
+        toast.error("No se pudo actualizar la rutina");
+        console.log("esto es lo que esta fallando: ", response2.error);
+      } else {
+        toast.success("Rutina actualizada");
+        router.refresh();
+      }
+    }
+  };
+
   const Botones =
     "text-orange font-bold border-orange lg:text-2xl border-4 p-3 rounded-lg hover:text-white hover:border-white";
   const NoInputBar =
     "resize-none scrollbar-hide [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none";
 
   return (
-    <div className="flex flex-col h-auto min-h-96 m-5  :w-auto">
+    <form
+      name="form"
+      className="flex flex-col h-auto min-h-96 m-5  :w-auto"
+      onSubmit={handleSubmit}
+    >
       <h1 className="text-center text-orange font-bold text-4xl">{name}</h1>
       <div className="flex">
         <label className="text-orange font-bold mr-5" htmlFor="NumbEx">
           Nº Ex:
         </label>
         <input
+          name="ejercicios"
           type="number"
           id="numEx"
           onFocus={(e) => changeCero(e)}
@@ -97,8 +139,10 @@ export default function Ejercicios({ name, id , userId}: { name: string, id: num
         <button className={Botones} onClick={handleDelete}>
           Delete
         </button>
-        <button className={Botones}>Save</button>
+        <button type="submit" className={Botones}>
+          Save
+        </button>
       </div>
-    </div>
+    </form>
   );
 }
